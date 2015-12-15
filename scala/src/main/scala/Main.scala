@@ -22,3 +22,4 @@ object Main extends App {
   println(x.l, x.d)
 
 }
+

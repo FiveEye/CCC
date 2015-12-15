@@ -9,14 +9,16 @@ default = 200
 
 import Prelude._
 
-class FormulaList[A](val l:List[(Formula, A)], val d: A) {
-  val V = FormulaList  
-  def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
-  def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
+class FormulaList[A](val l:List[(Formula, A)], val d: A) extends V[FormulaList] {
+  type C = A
+  val vf = FormulaList  
+  val va = this
+  //def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
+  //def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
 }
 
 
-object FormulaList extends V[FormulaList] {
+object FormulaList extends VFactory[FormulaList] {
   def One[A](one: A): FormulaList[A] = new FormulaList[A](List(), one)
   
   def Chc[A](m: Formula, y: FormulaList[A], n: FormulaList[A]): FormulaList[A] = {
