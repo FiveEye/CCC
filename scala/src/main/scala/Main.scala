@@ -1,11 +1,12 @@
 import Prelude._
+import FormulaList.{One, Chc}
 
 object Main extends App {
   type VImpl[A] = FormulaList[A]
   val V = FormulaList
   
   def f(s: String)(a: Int): VImpl[Int] = {
-    V.Chc(createTag(s), V.One(a + 1), V.One(a + 100))
+    Chc(tag(s), One(a + 1), One(a + 100))
   }
 
   val s = List(1,2,3)

@@ -1,3 +1,12 @@
+/*
+if a && b then 2
+else if a || b then 101
+else 200
+
+list = {(a && b, 2), (a || b, 101)}
+default = 200
+*/
+
 import Prelude._
 
 class FormulaList[A](val l:List[(Formula, A)], val d: A) {

@@ -10,13 +10,13 @@ object Prelude {
 
   type Formula = FeatureExpr
   
-  def createTag(t: String): Tag = {
+  def tag(t: String): Tag = {
     FeatureExprFactory.createDefinedExternal(t)
   }
 
-  val False = BDDFeatureExprFactory.False
+  val False = FeatureExprFactory.False
 
-  val True = BDDFeatureExprFactory.True  
+  val True = FeatureExprFactory.True  
 
 }
 
