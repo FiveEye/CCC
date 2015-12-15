@@ -2,15 +2,14 @@ import Prelude._
 
 abstract class FormulaTree[A] {
   val V = FormulaTree
-	def map[B](f : A => B): FormulaTree[B] = FormulaTree.map(this,f)
-	def flatMap[B]( f: A=>FormulaTree[B]): FormulaTree[B] = FormulaTree.flatMap(this, f)
+  def map[B](f : A => B): FormulaTree[B] = FormulaTree.map(this,f)
+  def flatMap[B]( f: A=>FormulaTree[B]): FormulaTree[B] = FormulaTree.flatMap(this, f)
 }
 
 case class FTOne[A](v:A) extends FormulaTree[A]
 case class FTChc[A](s: Formula, y: FormulaTree[A], n: FormulaTree[A]) extends FormulaTree[A]
 
 object FormulaTree extends V[FormulaTree] {
-
   def One[A](one: A) : FormulaTree[A] = FTOne(one)
   def Chc[A](s: Formula, y: FormulaTree[A], n: FormulaTree[A]): FormulaTree[A] = FTChc(s, y, n)
   

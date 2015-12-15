@@ -1,10 +1,9 @@
 import Prelude._
 
 class FormulaList[A](val l:List[(Formula, A)], val d: A) {
-  val V = FormulaList
-  
-	def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
-	def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
+  val V = FormulaList  
+  def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
+  def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
 }
 
 
