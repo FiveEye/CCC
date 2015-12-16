@@ -15,11 +15,11 @@ object Main extends App {
   
   
   var x = V.One(0)
-  println(x.l, x.d)
+  println(x)
   x = x.flatMap(f("A"))
-  println(x.l, x.d)
+  println(x)
   x = x.flatMap(f("B"))
-  println(x.l, x.d)
+  println(x)
 
 }
 

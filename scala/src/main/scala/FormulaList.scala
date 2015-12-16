@@ -15,6 +15,9 @@ class FormulaList[A](val l:List[(Formula, A)], val d: A) extends V[FormulaList] 
   val va = this
   //def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
   //def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
+  override
+  def toString: String = 
+    "FL: l = " + l + ", d = " + d;
 }
 
 
