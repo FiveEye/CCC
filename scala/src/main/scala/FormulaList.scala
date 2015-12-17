@@ -7,7 +7,7 @@ list = {(a && b, 2), (a || b, 101)}
 default = 200
 */
 
-import Prelude._
+package fe.CCC
 
 class FormulaList[A](val l:List[(Formula, A)], val d: A) extends V[FormulaList] {
   type C = A
@@ -35,6 +35,15 @@ object FormulaList extends VFactory[FormulaList] {
 
   def flatMap[A,B](v: FormulaList[A], f: A=>FormulaList[B]): FormulaList[B] = {
     v.l.foldRight(f(v.d)) { case ((m, a), vb) => Chc(m, f(a), vb) }
+  }
+  
+  def isOne[A](t: FormulaList[A]): Option[A] = if (t.l.isEmpty) Some(t.d) else None 
+  
+  def evaluate[A](t: FormulaList[A], s: Set[String]): A = {
+    t.l.find { case (m, a) => m.evaluate(s) } match {
+      case Some((m, a)) => a
+      case None         => t.d
+    }
   }
   
   private def add[A](m: Formula, a: A, l:List[(Formula, A)]): List[(Formula, A)] = {

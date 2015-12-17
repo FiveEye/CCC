@@ -1,11 +1,9 @@
-import Prelude._
+package fe.CCC
 
 abstract class FormulaTree[A] extends V[FormulaTree] {
   type C = A
   val vf = FormulaTree
   val va = this
-  //def map[B](f : A => B): FormulaTree[B] = FormulaTree.map(this,f)
-  //def flatMap[B]( f: A=>FormulaTree[B]): FormulaTree[B] = FormulaTree.flatMap(this, f)
 }
 
 case class FTOne[A](v:A) extends FormulaTree[A]
@@ -24,5 +22,14 @@ object FormulaTree extends VFactory[FormulaTree] {
   def flatMap[A,B](v: FormulaTree[A], f: A=>FormulaTree[B]): FormulaTree[B] = v match {
     case FTOne(v)     => f(v)
     case FTChc(m,y,n) => FTChc(m, flatMap(y,f), flatMap(n,f))
+  }
+  
+  def isOne[A](t: FormulaTree[A]): Option[A] = t match {
+    case FTOne(v)     => Some(v)
+    case FTChc(m,y,n) => None
+  }
+  def evaluate[A](t: FormulaTree[A], s: Set[String]): A = t match {
+    case FTOne(v)     => v
+    case FTChc(m,y,n) => if (m.evaluate(s)) evaluate(y, s) else evaluate(n, s)
   }
 }
