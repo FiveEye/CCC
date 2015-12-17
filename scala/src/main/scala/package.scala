@@ -15,8 +15,6 @@ package object CCC {
   def tag(t: String): Tag = {
     FeatureExprFactory.createDefinedExternal(t)
   }
-  
-  
 
   val False = FeatureExprFactory.False
 

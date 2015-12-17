@@ -13,13 +13,7 @@ class FormulaList[A](val l:List[(Formula, A)], val d: A) extends V[FormulaList] 
   type C = A
   val vf = FormulaList  
   val va = this
-  //def map[B](f : A => B): FormulaList[B] = FormulaList.map(this,f)
-  //def flatMap[B]( f: A=>FormulaList[B]): FormulaList[B] = FormulaList.flatMap(this, f)
-  override
-  def toString: String = 
-    "FL: l = " + l + ", d = " + d;
 }
-
 
 object FormulaList extends VFactory[FormulaList] {
   def One[A](one: A): FormulaList[A] = new FormulaList[A](List(), one)
@@ -44,6 +38,12 @@ object FormulaList extends VFactory[FormulaList] {
       case Some((m, a)) => a
       case None         => t.d
     }
+  }
+  
+  override
+  def vToString[A](t: FormulaList[A]): String = {
+    t.l.foldRight(t.d.toString) { case ((m,a), s) => "" + m + "->" + a + ", " + s }
+    //t.l.foldRight("se " + t.d) { case ((m,a), s) => "if " + m + " " + a + "\nel" + s }
   }
   
   private def add[A](m: Formula, a: A, l:List[(Formula, A)]): List[(Formula, A)] = {

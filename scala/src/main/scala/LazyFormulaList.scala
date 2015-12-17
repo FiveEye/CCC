@@ -13,11 +13,13 @@ object LazyFormulaList extends VFactory[LazyFormulaList] {
   def One[A](one: A): LazyFormulaList[A] = LFLNil(Lazy({one}))
   def Chc[A](m: Formula, y: LazyFormulaList[A], n: LazyFormulaList[A]): LazyFormulaList[A] = ???
   
+  def LazyNil[A](one: => A): LazyFormulaList[A] = LFLNil(Lazy(one))
+  def LazyCons[A](fm: Formula, func: => A, next: => LazyFormulaList[A]) = LFLCons(fm, Lazy(func), Lazy(next)) 
   
-  def lazyNil[A](one: => A): LazyFormulaList[A] = LFLNil(Lazy(one))
-  
-  def lazyCons[A](fm: Formula, func: => A, next: => LazyFormulaList[A]) = LFLCons(fm, Lazy(func), Lazy(next)) 
+  override
+  def map[A,B](v: LazyFormulaList[A], f: A => B): LazyFormulaList[B] = ???
 
+  def flatMap[A,B](v: LazyFormulaList[A], f: A=>LazyFormulaList[B]): LazyFormulaList[B] = ???
   
   def isOne[A](t: LazyFormulaList[A]): Option[A] = t match {
     case LFLNil(func) => Some(func())
@@ -30,9 +32,12 @@ object LazyFormulaList extends VFactory[LazyFormulaList] {
   }
   
   override
-  def map[A,B](v: LazyFormulaList[A], f: A => B): LazyFormulaList[B] = ???
-
-  def flatMap[A,B](v: LazyFormulaList[A], f: A=>LazyFormulaList[B]): LazyFormulaList[B] = ???
+  def vToString[A](t: LazyFormulaList[A]): String = t match {
+    case LFLNil(func) => func.toString
+    case LFLCons(fm, func, next) => {
+      "" + fm + "->" + func + ", " + next
+    }
+  }
     
 }
 

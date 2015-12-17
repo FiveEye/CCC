@@ -28,8 +28,10 @@ object FormulaTree extends VFactory[FormulaTree] {
     case FTOne(v)     => Some(v)
     case FTChc(m,y,n) => None
   }
+  
   def evaluate[A](t: FormulaTree[A], s: Set[String]): A = t match {
     case FTOne(v)     => v
     case FTChc(m,y,n) => if (m.evaluate(s)) evaluate(y, s) else evaluate(n, s)
   }
+  
 }
