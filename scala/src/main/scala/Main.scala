@@ -1,7 +1,7 @@
 package fe.CCC
 
 import FormulaList.{One, Chc}
-import LazyFormulaList.{LazyCons}
+import LazyFormulaList.{LazyNil, LazyCons}
 
 object Main extends App {
   type VImpl[A] = FormulaList[A]
@@ -44,7 +44,7 @@ object Main extends App {
   }
   
   println("--- LazyFormulaList ---")
-  val lazyFL = genFib(0,0,1)
+  val lazyFL = genFib(0,0,1).map(x => -x)
   //println(lazyFL(Set("n=0")))
   //println(lazyFL(Set("n=1")))
   //println(lazyFL(Set("n=2")))
@@ -55,6 +55,14 @@ object Main extends App {
   //println(lazyFL(Set("n=7")))
   //println(lazyFL(Set("n=8")))
   println(lazyFL)
+  
+  
+  val a = LazyNil(1)
+  val b = LazyNil(2)
+  val c = LazyFormulaList.Chc(tag("a"), a, b)
+  println(c(Set("a")))
+  println(c(Set()))
+  println(c)
   
 
 }

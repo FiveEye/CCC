@@ -4,19 +4,23 @@ class Lazy[T](func: => T) {
   var ret: Option[T] = None 
   
   def apply(): T = ret match {
-    case None => { val tmp = {func}; ret = Some(tmp); tmp }
     case Some(t) => t
+    case None => { val tmp = {func}; ret = Some(tmp); tmp }
   }
   
   def isDone = ret match {
-    case None => false
     case Some(t) => true
+    case None => false
   }
+  
+  def map[U](f: T => U): Lazy[U] = Lazy(f(this()))
+  
+  def flatMap[U](f: T => Lazy[U]): Lazy[U] = f(this())
   
   override
   def toString = ret match {
-    case None => "lazy" //super.toString
     case Some(t) => t.toString
+    case None => "lazy" //super.toString
   }
 }
 
