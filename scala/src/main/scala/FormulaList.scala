@@ -73,7 +73,11 @@ object FormulaList extends VFactory[FormulaList] {
       }
     }
     
-    new FormulaList(w._2.reverse, v.d)
+    //val w2 = w._2
+    
+    val w2 = w._2 dropWhile { case (f,x) => x == v.d }
+    
+    new FormulaList(w2.reverse, v.d)
   }
   
 }

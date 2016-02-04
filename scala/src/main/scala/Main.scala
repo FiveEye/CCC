@@ -80,7 +80,9 @@ object Main extends App {
 
   println(ol)
   println(ol.size())
+  println(ol.get(0))
   println(ol.get(1))
+  println(ol.get(2))
 
 }
 

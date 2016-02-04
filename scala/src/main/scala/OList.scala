@@ -40,7 +40,7 @@ object OList {
           case None => sn
         }
       }
-    }  
+    }
   }
 }
 
