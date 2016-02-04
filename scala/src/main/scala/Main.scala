@@ -2,6 +2,7 @@ package fe.CCC
 
 import FormulaList.{One, Chc}
 import LazyFormulaList.{LazyNil, LazyCons}
+import OList.{ONil, OCons}
 
 object Main extends App {
   type VImpl[A] = FormulaList[A]
@@ -35,6 +36,8 @@ object Main extends App {
   //println((tag("a") & !tag("b")).evaluate(Set("a")))
   //println(Set(1,2,3) &~ Set(2,3,4))
   
+
+  println("--- LazyFormulaList ---")
   def genNat(n: Int): LazyFormulaList[Int] = {
     LazyCons(tag(n.toString), n, genNat(n+1))
   }
@@ -43,7 +46,6 @@ object Main extends App {
     LazyCons(tag("n=" + n.toString), a, genFib(n+1, b, a+b))
   }
   
-  println("--- LazyFormulaList ---")
   val lazyFL = genFib(0,0,1).map(x => -x)
   //println(lazyFL(Set("n=0")))
   //println(lazyFL(Set("n=1")))
@@ -63,7 +65,22 @@ object Main extends App {
   println(c(Set("a")))
   println(c(Set()))
   println(c)
-  
+
+  println("--- OList ---")
+
+  def g(s: String)(a: Int): VImpl[Option[Int]] = {
+    Chc(tag(s), One(Some(a)), One(None))
+  }
+
+  var ol = ONil(): OList[Int]
+
+  for(i <- 0 to 2) {
+    ol = OCons(g("a" + i.toString)(10*(i+1)), ol)  
+  }
+
+  println(ol)
+  println(ol.size())
+  println(ol.get(1))
 
 }
 

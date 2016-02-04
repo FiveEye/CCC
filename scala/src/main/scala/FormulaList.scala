@@ -28,7 +28,9 @@ object FormulaList extends VFactory[FormulaList] {
   def map[A,B](v: FormulaList[A], f: A => B): FormulaList[B] = new FormulaList( v.l.map { case (m, a) => (m, f(a)) }, f(v.d) )
 
   def flatMap[A,B](v: FormulaList[A], f: A=>FormulaList[B]): FormulaList[B] = {
-    v.l.foldRight(f(v.d)) { case ((m, a), vb) => Chc(m, f(a), vb) }
+    simplify(
+      v.l.foldRight(f(v.d)) { case ((m, a), vb) => Chc(m, f(a), vb) }
+    )
   }
   
   def isOne[A](t: FormulaList[A]): Option[A] = if (t.l.isEmpty) Some(t.d) else None 
@@ -70,6 +72,7 @@ object FormulaList extends VFactory[FormulaList] {
         }
       }
     }
+    
     new FormulaList(w._2.reverse, v.d)
   }
   
