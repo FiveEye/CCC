@@ -1,23 +1,20 @@
 package fe.CCC
 
-import FormulaList.{One, Chc}
-
-
-
 class OList[A] {
   def size() = OList.size(this)
   def get(i: Int) = OList.get(this, i)
 }
 
 object OList {
-  type VImpl[A] = FormulaList[A]
+  
   val V = FormulaList
-
+  type VImpl[A] = V.VImpl[A]
+  
   case class ONil[A]() extends OList[A]
   case class OCons[A](v: VImpl[Option[A]], next: OList[A]) extends OList[A]
 
   def size[A](l: OList[A]): VImpl[Int] = l match {
-    case ONil() => One(0)
+    case ONil() => V.One(0)
     case OCons(v,next) => {
       val sn = size(next) 
       v flatMap {
@@ -28,10 +25,10 @@ object OList {
   }
 
   def get[A](l: OList[A], i: Int): VImpl[Option[A]] = l match {
-    case ONil() => One(None)
+    case ONil() => V.One(None)
     case OCons(v,next) => {
       if (i < 0) 
-        One(None)
+        V.One(None)
       else {
         val sn = get(next, i)
         val sm = get(next, i - 1)
