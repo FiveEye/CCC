@@ -1,6 +1,6 @@
 package fe.CCC
 
-abstract class VFactory[_VImpl[A]] {
+abstract class VFactory[_VImpl[A] <: V[_VImpl]] {
   type VImpl[A] = _VImpl[A]
   
   def One[A](one: A): VImpl[A]
